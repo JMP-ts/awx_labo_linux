@@ -1,0 +1,23 @@
+---
+- hosts: "{{ hosts }}"
+  become: true
+  tasks:
+  -  name: group
+     group:
+       name: "{{ item }}"
+     with_items:
+     - virtu
+     - bd
+     - auto 
+  -  name: create users
+     user:
+       name: "{{ item.nombre }}"
+       group: "{{ item.grupo }}"
+       shell: "/bin/bash"
+       comment: "usuario creado por ansible" 
+       state: present
+     with_items:
+     - {nombre: 'mrutolo', grupo: 'virtu'}
+     - {nombre: 'estiven', grupo: 'auto'}
+     - {nombre: 'gonzalo', grupo: 'bd'}
+     - {nombre: 'miquel', grupo: 'virtu'}
